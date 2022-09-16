@@ -61,8 +61,8 @@ flutter:
     - assets/controller/
     - assets/fonts/
     - assets/images/gui/
-    - assets/images/inventory
-    - assets/images/launcher
+    - assets/images/inventory/
+    - assets/images/launcher/
     - assets/images/parallax/evening/
     - assets/images/parallax/morning/
     - assets/images/parallax/night/

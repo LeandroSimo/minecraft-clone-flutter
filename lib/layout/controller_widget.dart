@@ -16,7 +16,7 @@ class ControllerWidget extends StatelessWidget {
             onPressed: () {},
           ),
           ControllerButtonWidget(
-            path: 'assets/controller/center.png',
+            path: 'assets/controller/center_button.png',
             onPressed: () {},
           ),
           ControllerButtonWidget(
