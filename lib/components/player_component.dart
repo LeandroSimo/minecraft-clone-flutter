@@ -1,23 +1,44 @@
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flutter/material.dart';
 import 'package:minecraft/global/global_game_reference.dart';
 import 'package:minecraft/global/player_data.dart';
 
 class PlayerComponent extends SpriteAnimationComponent {
+  final Vector2 playerDimensions = Vector2.all(60);
+  final double stepTime = 0.3;
   final double speed = 5;
   bool isFacingRight = true;
+
+  late SpriteSheet playerWalkingSpriteSheet;
+  late SpriteSheet playerIdleSpriteSheet;
+
+  late SpriteAnimation walkingAnimation =
+      playerWalkingSpriteSheet.createAnimation(row: 0, stepTime: stepTime);
+
+  late SpriteAnimation idleAnimation =
+      playerIdleSpriteSheet.createAnimation(row: 0, stepTime: stepTime);
+
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    SpriteSheet playerSpriteSheet = SpriteSheet(
+
+    playerWalkingSpriteSheet = SpriteSheet(
       image: await Flame.images
           .load('sprite_sheets/player/player_walking_sprite_sheet.png'),
-      srcSize: Vector2.all(60),
+      srcSize: playerDimensions,
     );
-    animation = playerSpriteSheet.createAnimation(row: 0, stepTime: 0.1);
+    playerIdleSpriteSheet = SpriteSheet(
+      image: await Flame.images
+          .load('sprite_sheets/player/player_idle_sprite_sheet.png'),
+      srcSize: playerDimensions,
+    );
+
     size = Vector2(100, 100);
     position = Vector2(100, 500);
+
+    animation = idleAnimation;
   }
 
   @override
@@ -36,6 +57,7 @@ class PlayerComponent extends SpriteAnimationComponent {
         flipHorizontallyAroundCenter();
         isFacingRight = false;
       }
+      animation = walkingAnimation;
     }
 
     // Moving Right
@@ -47,6 +69,13 @@ class PlayerComponent extends SpriteAnimationComponent {
         flipHorizontallyAroundCenter();
         isFacingRight = true;
       }
+      animation = walkingAnimation;
+    }
+
+    if (GlobalGameReference
+            .instance.gameReference.wordData.playerData.componentMotionState ==
+        ComponentMotionState.idle) {
+      animation = idleAnimation;
     }
   }
 }
