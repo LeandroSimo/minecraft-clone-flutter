@@ -6,6 +6,7 @@ import 'package:minecraft/global/player_data.dart';
 
 class PlayerComponent extends SpriteAnimationComponent {
   final double speed = 5;
+  bool isFacingRight = true;
   @override
   Future<void> onLoad() async {
     super.onLoad();
@@ -22,17 +23,30 @@ class PlayerComponent extends SpriteAnimationComponent {
   @override
   void update(double dt) {
     super.update(dt);
+    movementLogic();
+  }
 
-    // MOving Lefy
+  void movementLogic() {
+    // Moving Left
     if (GlobalGameReference
             .instance.gameReference.wordData.playerData.componentMotionState ==
         ComponentMotionState.walkingLeft) {
       position.x -= speed;
+      if (isFacingRight) {
+        flipHorizontallyAroundCenter();
+        isFacingRight = false;
+      }
     }
+
+    // Moving Right
     if (GlobalGameReference
             .instance.gameReference.wordData.playerData.componentMotionState ==
         ComponentMotionState.walkingRight) {
       position.x += speed;
+      if (!isFacingRight) {
+        flipHorizontallyAroundCenter();
+        isFacingRight = true;
+      }
     }
   }
 }
