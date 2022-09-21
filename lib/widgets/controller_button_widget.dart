@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:minecraft/global/global_game_reference.dart';
+import 'package:minecraft/global/player_data.dart';
 
 class ControllerButtonWidget extends StatefulWidget {
   final String path;
@@ -29,6 +32,8 @@ class _ControllerButtonWidgetState extends State<ControllerButtonWidget> {
         onTapUp: (_) {
           setState(() {
             isPressed = true;
+            GlobalGameReference.instance.gameReference.wordData.playerData
+                .componentMotionState = ComponentMotionState.idle;
           });
         },
         child: Opacity(

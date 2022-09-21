@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:minecraft/global/global_game_reference.dart';
+import 'package:minecraft/global/player_data.dart';
 import 'package:minecraft/widgets/controller_button_widget.dart';
 
 class ControllerWidget extends StatelessWidget {
@@ -6,6 +8,8 @@ class ControllerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PlayerData playerData =
+        GlobalGameReference.instance.gameReference.wordData.playerData;
     return Positioned(
       bottom: 100,
       left: 20,
@@ -13,7 +17,10 @@ class ControllerWidget extends StatelessWidget {
         children: [
           ControllerButtonWidget(
             path: 'assets/controller/left_button.png',
-            onPressed: () {},
+            onPressed: () {
+              playerData.componentMotionState =
+                  ComponentMotionState.walkingLeft;
+            },
           ),
           ControllerButtonWidget(
             path: 'assets/controller/center_button.png',
@@ -21,7 +28,10 @@ class ControllerWidget extends StatelessWidget {
           ),
           ControllerButtonWidget(
             path: 'assets/controller/right_button.png',
-            onPressed: () {},
+            onPressed: () {
+              playerData.componentMotionState =
+                  ComponentMotionState.walkingRight;
+            },
           ),
         ],
       ),
