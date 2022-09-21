@@ -31,7 +31,7 @@ class _ControllerButtonWidgetState extends State<ControllerButtonWidget> {
         },
         onTapUp: (_) {
           setState(() {
-            isPressed = true;
+            isPressed = false;
             GlobalGameReference.instance.gameReference.wordData.playerData
                 .componentMotionState = ComponentMotionState.idle;
           });
